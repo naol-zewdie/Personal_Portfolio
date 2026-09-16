@@ -11,7 +11,7 @@ export default function Testimonials() {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-4xl md:text-5xl font-display font-bold mb-4"
+                        className="text-4xl md:text-5xl font-title font-bold mb-4 tracking-wide"
                     >
                         Client <span className="text-gradient">Feedback</span>
                     </motion.h2>
@@ -20,7 +20,7 @@ export default function Testimonials() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-gray-400 max-w-2xl mx-auto"
+                        className="text-gray-300 max-w-2xl mx-auto font-light"
                     >
                         Don't just take my word for it. Here's what my clients and colleagues have to say about our collaboration.
                     </motion.p>
@@ -35,9 +35,9 @@ export default function Testimonials() {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.6 }}
                             whileHover={{ y: -10 }}
-                            className="glass-card p-8 group relative"
+                            className="glass-card p-8 group relative hover:border-red-500/40 transition-colors"
                         >
-                            <div className="absolute -top-4 -right-4 w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg opacity-20 group-hover:opacity-100 transition-opacity">
+                            <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-red-600/40 opacity-40 group-hover:opacity-100 transition-opacity">
                                 <Quote size={20} />
                             </div>
 
@@ -45,21 +45,21 @@ export default function Testimonials() {
                                 <img
                                     src={item.avatar}
                                     alt={item.name}
-                                    className="w-14 h-14 rounded-full border-2 border-emerald-500/20 p-1"
+                                    className="w-14 h-14 rounded-full border-2 border-red-500/40 p-0.5 object-cover"
                                 />
                                 <div>
-                                    <h4 className="text-white font-bold">{item.name}</h4>
-                                    <p className="text-gray-500 text-sm">{item.role}</p>
+                                    <h4 className="text-white font-bold font-title tracking-wide">{item.name}</h4>
+                                    <p className="text-gray-400 text-sm">{item.role}</p>
                                 </div>
                             </div>
 
-                            <p className="text-gray-300 italic leading-relaxed">
+                            <p className="text-gray-300 italic leading-relaxed font-light">
                                 "{item.text}"
                             </p>
 
                             <div className="mt-8 flex gap-1">
                                 {[...Array(5)].map((_, i) => (
-                                    <span key={i} className="text-emerald-500 text-lg">★</span>
+                                    <span key={i} className="text-red-500 text-lg">★</span>
                                 ))}
                             </div>
                         </motion.div>

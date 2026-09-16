@@ -11,6 +11,6 @@ export const getGeminiResponse = async (userMessage) => {
         return data.text;
     } catch (error) {
         console.error("Gemini Error:", error);
-        return "I'm sorry, I'm having trouble connecting to Rebira's brain right now. Please try again in a few seconds!";
+        return "I'm sorry, I'm having trouble connecting to Naol's brain right now. Please try again in a few seconds!";
     }
 };

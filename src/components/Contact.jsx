@@ -22,7 +22,7 @@ export default function Contact() {
             formData.append('_subject', 'Portfolio Contact');
             formData.append('_captcha', 'false');
 
-            const response = await fetch("https://formsubmit.co/ajax/rebikman9@gmail.com", {
+            const response = await fetch("https://formsubmit.co/ajax/naol1000zedu@gmail.com", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -46,9 +46,8 @@ export default function Contact() {
         }
     };
     const socials = [
-        { Icon: Github, link: "https://github.com/rebira678" },
-        { Icon: Linkedin, link: "https://www.linkedin.com/in/rebira-adugna-6496b2373" },
-        { Icon: Twitter, link: "https://twitter.com/your-handle" },
+        { Icon: Github, link: "https://github.com/naol-zewdie" },
+        { Icon: Linkedin, link: "https://www.linkedin.com/in/naol-zewdie" },
     ];
 
     return (
@@ -60,52 +59,52 @@ export default function Contact() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+                        <h2 className="text-4xl md:text-5xl font-title font-bold mb-6 tracking-wide">
                             Let's <span className="text-gradient">Connect</span>
                         </h2>
-                        <p className="text-gray-400 text-lg mb-10 leading-relaxed">
-                            Have a project in mind or just want to say hi? I'm always open to discussing new opportunities,
-                            creative ideas, or collaborations. My inbox is always open.
+                        <p className="text-gray-300 text-lg mb-10 leading-relaxed font-light">
+                            Have a project in mind, need backend architecture consultation, or looking for a developer to ship reliable APIs?
+                            Feel free to reach out directly. My inbox is always open.
                         </p>
 
                         <div className="space-y-6">
                             <div className="flex items-center gap-6 p-4 glass-card border-none hover:bg-white/5 transition-colors">
-                                <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500">
-                                    <Mail size={24} />
+                                <div className="w-12 h-12 bg-red-950/60 border border-red-500/30 rounded-full flex items-center justify-center text-red-400 shadow-md shadow-red-950/50">
+                                    <Mail size={22} />
                                 </div>
                                 <div>
-                                    <h4 className="text-gray-500 text-xs uppercase tracking-widest font-bold">Email</h4>
-                                    <a href="mailto:rebikman9@gmail.com" className="text-white font-medium hover:text-emerald-500 transition-colors">
-                                        rebikman9@gmail.com
+                                    <h4 className="text-gray-400 text-xs uppercase tracking-widest font-bold">Email</h4>
+                                    <a href="mailto:naol1000zedu@gmail.com" className="text-white font-medium hover:text-red-400 transition-colors">
+                                        naol1000zedu@gmail.com
                                     </a>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-6 p-4 glass-card border-none hover:bg-white/5 transition-colors">
-                                <div className="w-12 h-12 bg-sky-500/10 rounded-full flex items-center justify-center text-sky-500">
-                                    <MapPin size={24} />
+                                <div className="w-12 h-12 bg-red-950/60 border border-red-500/30 rounded-full flex items-center justify-center text-red-400 shadow-md shadow-red-950/50">
+                                    <MapPin size={22} />
                                 </div>
                                 <div>
-                                    <h4 className="text-gray-500 text-xs uppercase tracking-widest font-bold">Location</h4>
-                                    <p className="text-white font-medium">Adama, Ethiopia</p>
+                                    <h4 className="text-gray-400 text-xs uppercase tracking-widest font-bold">Location</h4>
+                                    <p className="text-white font-medium">Addis Ababa, Ethiopia</p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-6 p-4 glass-card border-none hover:bg-white/5 transition-colors">
-                                <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500">
-                                    <Phone size={24} />
+                                <div className="w-12 h-12 bg-red-950/60 border border-red-500/30 rounded-full flex items-center justify-center text-red-400 shadow-md shadow-red-950/50">
+                                    <Phone size={22} />
                                 </div>
                                 <div>
-                                    <h4 className="text-gray-500 text-xs uppercase tracking-widest font-bold">Phone</h4>
-                                    <p className="text-white font-medium">+251 969 180 823</p>
+                                    <h4 className="text-gray-400 text-xs uppercase tracking-widest font-bold">Phone</h4>
+                                    <a href="tel:+251903053038" className="text-white font-medium hover:text-red-400 transition-colors">
+                                        +251 903 053 038
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
                         <div className="mt-12">
-                            <h4 className="text-white font-bold mb-6">Follow Me</h4>
-
-
+                            <h4 className="text-white font-title font-bold mb-6 tracking-wide">Profiles & Code</h4>
 
                             <div className="flex gap-4">
                                 {socials.map(({ Icon, link }, i) => (
@@ -114,7 +113,7 @@ export default function Contact() {
                                         href={link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-12 h-12 glass-card border-none flex items-center justify-center text-gray-400 hover:text-emerald-500 hover:bg-white/5 transition-all outline-none"
+                                        className="w-12 h-12 glass-card border-white/10 flex items-center justify-center text-gray-400 hover:text-red-400 hover:border-red-500/40 hover:bg-white/5 transition-all outline-none"
                                     >
                                         <Icon size={20} />
                                     </a>
@@ -128,7 +127,7 @@ export default function Contact() {
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="glass-card p-8 md:p-10"
+                        className="glass-card p-8 md:p-10 border border-white/10"
                     >
                         <form
                             onSubmit={handleSubmit}
@@ -137,43 +136,42 @@ export default function Contact() {
                             <input type="hidden" name="_captcha" value="false" />
                             <input type="hidden" name="_subject" value="New message from Portfolio" />
 
-
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-gray-500 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Name</label>
+                                    <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Name</label>
                                     <input
                                         type="text"
                                         name="name"
                                         required
                                         value={formState.name}
                                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-emerald-500/50 outline-none transition-all"
+                                        className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-white focus:border-red-500/70 outline-none transition-all placeholder:text-gray-600"
                                         placeholder="John Doe"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-gray-500 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Email</label>
+                                    <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Email</label>
                                     <input
                                         type="email"
                                         name="email"
                                         required
                                         value={formState.email}
                                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-emerald-500/50 outline-none transition-all"
+                                        className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-white focus:border-red-500/70 outline-none transition-all placeholder:text-gray-600"
                                         placeholder="john@example.com"
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-gray-500 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Message</label>
+                                <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Message</label>
                                 <textarea
                                     name="message"
                                     required
                                     rows="5"
                                     value={formState.message}
                                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-emerald-500/50 outline-none transition-all resize-none"
-                                    placeholder="How can I help you?"
+                                    className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-white focus:border-red-500/70 outline-none transition-all resize-none placeholder:text-gray-600"
+                                    placeholder="Tell me about your project or architecture needs..."
                                 ></textarea>
                             </div>
 
@@ -181,8 +179,8 @@ export default function Contact() {
                                 type="submit"
                                 disabled={isSending || isSent}
                                 className={`w-full py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all ${isSent
-                                    ? 'bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)]'
-                                    : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                                    ? 'bg-red-700 text-white shadow-[0_0_20px_rgba(220,38,38,0.6)]'
+                                    : 'bg-gradient-to-r from-red-700 via-red-600 to-red-800 hover:from-red-600 hover:to-red-700 text-white shadow-lg shadow-red-700/40 border border-red-500/40'
                                     }`}
                             >
                                 {isSent ? 'Message Sent!' : isSending ? 'Sending...' : 'Send Message'}
@@ -190,15 +188,15 @@ export default function Contact() {
                             </button>
 
                             {isSent && (
-                                <div className="mt-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                                    <p className="text-emerald-500 font-bold mb-1">Message Sent Successfully!</p>
-                                    <p className="text-emerald-400 text-sm">Thank you for reaching out. I will get back to you as soon as possible.</p>
+                                <div className="mt-6 p-4 rounded-xl bg-red-950/50 border border-red-500/40">
+                                    <p className="text-red-300 font-bold mb-1">Message Sent Successfully!</p>
+                                    <p className="text-gray-300 text-sm">Thank you for reaching out. I will get back to you as soon as possible.</p>
                                 </div>
                             )}
 
                             {status === 'error' && (
-                                <p className="text-red-500 text-center text-sm mt-4">
-                                    Something went wrong. Please try clicking the email above to send directly.
+                                <p className="text-red-400 text-center text-sm mt-4">
+                                    Something went wrong. Please click the email above to reach me directly.
                                 </p>
                             )}
                         </form>

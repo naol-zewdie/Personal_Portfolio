@@ -1,12 +1,40 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'CaskoLuxury';
+  src: url('./assets/fonts/CaskoLuxuryDemo-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ClashDisplay';
+  src: url('./assets/fonts/ClashDisplay-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NCLGasdrifo';
+  src: url('./assets/fonts/NCLGasdrifo-Demo.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
-  --color-brand-primary: #10b981;
-  --color-brand-secondary: #0ea5e9;
-  --color-dark-bg: #030712;
-  --color-glass: rgba(17, 25, 40, 0.75);
+  --color-brand-primary: #dc2626;
+  --color-brand-dark: #991b1b;
+  --color-brand-secondary: #ffffff;
+  --color-dark-bg: #050505;
+  --color-glass: rgba(10, 10, 10, 0.8);
   
-  --font-display: "Outfit", sans-serif;
+  --font-logo: "CaskoLuxury", serif;
+  --font-hero: "ClashDisplay", sans-serif;
+  --font-title: "NCLGasdrifo", sans-serif;
+  --font-display: "NCLGasdrifo", sans-serif;
   --font-body: "Inter", sans-serif;
   
   --animate-float: float 6s ease-in-out infinite;
@@ -24,33 +52,54 @@
   }
   
   body {
-    @apply bg-gray-950 text-gray-100 font-sans antialiased;
+    background-color: #000000;
+    color: #f3f4f6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(185, 28, 28, 0.18) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(220, 38, 38, 0.14) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(153, 27, 27, 0.12) 0px, transparent 50%);
     min-height: 100vh;
   }
   
   ::selection {
-    @apply bg-emerald-500/30 text-emerald-200;
+    background-color: rgba(220, 38, 38, 0.4);
+    color: #ffffff;
   }
 }
 
 @layer components {
+  .font-logo {
+    font-family: 'CaskoLuxury', serif;
+  }
+
+  .font-hero {
+    font-family: 'ClashDisplay', sans-serif;
+  }
+
+  .font-clash {
+    font-family: 'ClashDisplay', sans-serif;
+  }
+
+  .font-title {
+    font-family: 'NCLGasdrifo', sans-serif;
+  }
+
   .glass-card {
-    @apply bg-gray-900/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
+    @apply bg-zinc-950/70 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
   }
   
   .btn-primary {
-    @apply relative px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)];
+    @apply relative px-8 py-3 bg-gradient-to-r from-red-700 via-red-600 to-red-800 hover:from-red-600 hover:to-red-700 text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(220,38,38,0.5)] hover:shadow-[0_0_35px_rgba(239,68,68,0.7)] border border-red-500/30;
   }
   
   .btn-secondary {
-    @apply px-8 py-3 bg-transparent border border-white/20 hover:border-emerald-500/50 hover:bg-white/5 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95;
+    @apply px-8 py-3 bg-black/60 border border-white/20 hover:border-red-500/50 hover:bg-white/5 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95;
   }
   
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-sky-400 font-bold;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-red-300 to-red-600 font-bold;
   }
   
   .section-padding {
@@ -64,14 +113,21 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-950;
+  background-color: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-emerald-900/50 hover:bg-emerald-800/50 rounded-full border-2 border-transparent bg-clip-content;
+  background-color: #450a0a;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #991b1b;
 }
 
 /* Page transitions */
 .page-transition {
-  @apply transition-opacity duration-700 ease-in-out;
+  transition: opacity 700ms ease-in-out;
 }

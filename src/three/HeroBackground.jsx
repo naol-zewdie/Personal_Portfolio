@@ -1,35 +1,46 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, MeshDistortMaterial, Sphere, Float } from '@react-three/drei';
 import * as random from 'maath/random';
 
 function AnimatedSphere() {
     const meshRef = useRef();
-    const [hovered, setHovered] = useState(false);
+    const scrollY = useRef(0);
+
+    useEffect(() => {
+        const onScroll = () => {
+            scrollY.current = window.scrollY;
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     useFrame((state) => {
         const time = state.clock.getElapsedTime();
         if (meshRef.current) {
-            meshRef.current.rotation.x = Math.sin(time / 4);
-            meshRef.current.rotation.y = Math.cos(time / 2);
+            meshRef.current.rotation.x = Math.sin(time / 4) + state.pointer.y * 0.15;
+            meshRef.current.rotation.y = Math.cos(time / 2) + state.pointer.x * 0.15;
+
+            const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+            const progress = scrollY.current / maxScroll;
+            meshRef.current.position.y = (progress - 0.5) * -0.3;
+            meshRef.current.position.x = Math.sin(progress * Math.PI) * 0.12;
         }
     });
 
     return (
-        <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+        <Float speed={3} rotationIntensity={0.6} floatIntensity={1.2}>
             <Sphere
                 ref={meshRef}
-                args={[1, 100, 100]}
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
+                args={[1, 48, 48]}
             >
                 <MeshDistortMaterial
-                    color={hovered ? "#34d399" : "#10b981"}
+                    color="#dc2626"
                     attach="material"
                     distort={0.4}
                     speed={2}
-                    roughness={0.2}
-                    metalness={0.8}
+                    roughness={0.25}
+                    metalness={0.85}
                 />
             </Sphere>
         </Float>
@@ -38,11 +49,15 @@ function AnimatedSphere() {
 
 function Stars(props) {
     const ref = useRef();
-    const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.5 }));
+    const [sphere] = useState(() => random.inSphere(new Float32Array(2800), { radius: 1.5 }));
 
     useFrame((state, delta) => {
-        ref.current.rotation.x -= delta / 10;
-        ref.current.rotation.y -= delta / 15;
+        if (ref.current) {
+            ref.current.rotation.x -= delta / 10;
+            ref.current.rotation.y -= delta / 15;
+            ref.current.rotation.x += state.pointer.y * 0.0005;
+            ref.current.rotation.y += state.pointer.x * 0.0005;
+        }
     });
 
     return (
@@ -61,11 +76,27 @@ function Stars(props) {
 }
 
 export default function HeroBackground() {
+    const [isVisible, setIsVisible] = useState(typeof document !== 'undefined' ? !document.hidden : true);
+
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            setIsVisible(!document.hidden);
+        };
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    }, []);
+
     return (
-        <div className="absolute inset-0 -z-10">
-            <Canvas camera={{ position: [0, 0, 1] }}>
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1} />
+        <div className="fixed inset-0 -z-10 pointer-events-none w-full h-full">
+            <Canvas
+                frameloop={isVisible ? "always" : "never"}
+                camera={{ position: [0, 0, 1] }}
+                gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+                dpr={[1, 1.5]}
+            >
+                <ambientLight intensity={0.6} />
+                <pointLight position={[10, 10, 10]} intensity={1.2} />
+                <pointLight position={[-10, -10, -5]} intensity={0.6} color="#dc2626" />
                 <AnimatedSphere />
                 <Stars />
             </Canvas>

@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ScrollProgress from './components/ScrollProgress';
+import HeroBackground from './three/HeroBackground';
 
 // Lazy load sections for better performance
 const About = lazy(() => import('./components/About'));
@@ -14,14 +15,16 @@ const AiAssistant = lazy(() => import('./components/AiAssistant'));
 
 function App() {
   return (
-    <div className="relative overflow-x-hidden">
+    <div className="relative overflow-x-hidden min-h-screen">
+      {/* 3D Cosmic background animation active across all sections */}
+      <HeroBackground />
       <ScrollProgress />
       <Navbar />
 
-      <main>
+      <main className="relative z-10">
         <Hero />
 
-        <Suspense fallback={<div className="h-screen flex items-center justify-center bg-gray-950 text-emerald-500">Loading...</div>}>
+        <Suspense fallback={<div className="h-screen flex items-center justify-center bg-black text-red-500 font-medium">Loading...</div>}>
           <About />
           <Skills />
           <Projects />

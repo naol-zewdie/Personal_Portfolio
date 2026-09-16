@@ -31,11 +31,15 @@ export default function Navbar() {
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="text-2xl font-display font-bold tracking-tighter"
+                    className="text-2xl font-bold tracking-tighter"
                 >
-                    <a href="#home" className="flex items-center gap-2">
-                        <span className="w-8 h-8 bg-emerald-500 rounded-lg"></span>
-                        <span>REBIK</span>
+                    <a href="#home" className="flex items-center gap-2.5 group">
+                        <span className="w-9 h-9 rounded-lg bg-gradient-to-br from-red-600 via-red-700 to-black flex items-center justify-center font-logo text-xl text-white shadow-lg shadow-red-700/40 border border-red-500/40 group-hover:scale-105 transition-transform">
+                            N
+                        </span>
+                        <span className="font-logo text-2xl tracking-widest text-white group-hover:text-red-400 transition-colors">
+                            NAOL
+                        </span>
                     </a>
                 </motion.div>
 
@@ -51,7 +55,7 @@ export default function Navbar() {
                             >
                                 <a
                                     href={link.href}
-                                    className="text-sm font-medium text-gray-400 hover:text-emerald-400 transition-colors uppercase tracking-widest"
+                                    className="text-sm font-hero font-medium text-gray-300 hover:text-red-400 transition-colors uppercase tracking-wider"
                                 >
                                     {link.name}
                                 </a>
@@ -59,10 +63,22 @@ export default function Navbar() {
                         ))}
                     </ul>
                     <div className="flex gap-4 border-l border-white/10 pl-8">
-                        <a href="https://github.com/rebira678" className="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-400 hover:text-white">
+                        <a
+                            href="https://github.com/naol-zewdie"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-400 hover:text-red-400"
+                            aria-label="GitHub Profile"
+                        >
                             <Github size={18} />
                         </a>
-                        <a href="https://www.linkedin.com/in/rebira-adugna-6496b2373" className="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-400 hover:text-white">
+                        <a
+                            href="https://www.linkedin.com/in/naol-zewdie"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-400 hover:text-red-400"
+                            aria-label="LinkedIn Profile"
+                        >
                             <Linkedin size={18} />
                         </a>
                     </div>
@@ -70,7 +86,7 @@ export default function Navbar() {
 
                 {/* Mobile Toggle */}
                 <button
-                    className="md:hidden p-2 text-gray-400"
+                    className="md:hidden p-2 text-gray-400 hover:text-red-400"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
                     {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -84,14 +100,14 @@ export default function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-gray-950 border-b border-white/10 overflow-hidden"
+                        className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
                     >
                         <ul className="flex flex-col p-6 gap-4">
                             {navLinks.map((link) => (
                                 <li key={link.name}>
                                     <a
                                         href={link.href}
-                                        className="text-lg font-medium text-gray-400 hover:text-emerald-400 block py-2"
+                                        className="text-lg font-hero font-medium text-gray-300 hover:text-red-400 block py-2 tracking-wide"
                                         onClick={() => setIsMobileMenuOpen(false)}
                                     >
                                         {link.name}
@@ -99,9 +115,8 @@ export default function Navbar() {
                                 </li>
                             ))}
                             <div className="flex gap-6 pt-4 border-t border-white/5">
-                                <a href="https://github.com/rebira678" className="text-gray-400 hover:text-white"><Github /></a>
-                                <a href="https://www.linkedin.com/in/rebira-adugna-6496b2373" className="text-gray-400 hover:text-white"><Linkedin /></a>
-                                <a href="#" className="text-gray-400 hover:text-white"><Twitter /></a>
+                                <a href="https://github.com/naol-zewdie" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-400"><Github /></a>
+                                <a href="https://www.linkedin.com/in/naol-zewdie" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-400"><Linkedin /></a>
                             </div>
                         </ul>
                     </motion.div>
