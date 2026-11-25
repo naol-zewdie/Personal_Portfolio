@@ -1,40 +1,25 @@
-# Naol Zewdie - Full Stack & Backend Developer Portfolio
+# Naol Zewdie · Portfolio
 
-A high-performance personal portfolio built with React 19, Tailwind CSS 4, Three.js, and Framer Motion, customized in a dark glassmorphism theme with golden amber and vibrant orange accents.
+Personal site: selected work, the six-month robotics and autonomy roadmap, a short Q&A and a contact form.
 
-## 🚀 Features
+React 19 + Vite, Tailwind CSS 4, Framer Motion for entrance animations, Lucide icons. The pixel sky in the hero is a small canvas component with no dependencies.
 
-- **Golden 3D Hero Section**: Rotating iridescent mesh sphere with floating particles powered by `@react-three/fiber` & `@react-three/drei`.
-- **Dark Glassmorphism UI**: Translucent cards, subtle golden glows, and clean typography.
-- **Interactive Projects Gallery**: Filterable project showcase with smooth layout transitions.
-- **AI Digital Assistant**: Floating Gemini-powered chat assistant configured to answer questions about Naol's backend expertise.
-- **Micro-interactions & Animations**: Framer Motion scroll progress bar, section entrances, and interactive buttons.
-- **Direct Contact Form**: Automated email submissions via FormSubmit.
+## Run it
 
-## 🛠️ Tech Stack
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # production build in dist/
+```
 
-- **Frontend**: [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **3D Graphics**: [Three.js](https://threejs.org/) / `@react-three/fiber`
-- **Icons**: [Lucide React](https://lucide.dev/) / [React Icons](https://react-icons.github.io/react-icons/)
+## Edit the content
 
-## 📦 Getting Started
+Everything personal is data, not markup:
 
-### Installation
+| What | Where |
+|---|---|
+| Name, email, links, Q&A, stack | `src/data/profile.js` |
+| Projects (add one: screenshot in `src/assets/work/`, then an entry) | `src/data/projects.js` |
+| Roadmap months and their status (`now` / `next` / `done`, optional `link`) | `src/data/roadmap.js` |
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-3. Open [http://localhost:5173](http://localhost:5173) in your browser.
-
----
-
-Built with passion and code by Naol Zewdie
+The contact form posts to FormSubmit using the email in `profile.js`.

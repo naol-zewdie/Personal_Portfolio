@@ -1,127 +1,112 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Github, Linkedin, Twitter } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
+import PixelQuad from './PixelQuad';
+import { profile } from '../data/profile';
 
-const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
+const links = [
+  { href: '#work', label: 'Work' },
+  { href: '#roadmap', label: 'Roadmap' },
+  { href: '#about', label: 'About' },
+  { href: '#contact', label: 'Contact' },
 ];
 
 export default function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    return (
-        <nav
-            className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-4 bg-gray-950/80 backdrop-blur-md border-b border-white/10' : 'py-6 bg-transparent'
-                }`}
-        >
-            <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="text-2xl font-bold tracking-tighter"
-                >
-                    <a href="#home" className="flex items-center gap-2.5 group">
-                        <span className="w-9 h-9 rounded-lg bg-gradient-to-br from-red-600 via-red-700 to-black flex items-center justify-center font-logo text-xl text-white shadow-lg shadow-red-700/40 border border-red-500/40 group-hover:scale-105 transition-transform">
-                            N
-                        </span>
-                        <span className="font-logo text-2xl tracking-widest text-white group-hover:text-red-400 transition-colors">
-                            NAOL
-                        </span>
-                    </a>
-                </motion.div>
-
-                {/* Desktop Links */}
-                <div className="hidden md:flex items-center gap-8">
-                    <ul className="flex gap-8">
-                        {navLinks.map((link, index) => (
-                            <motion.li
-                                key={link.name}
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                            >
-                                <a
-                                    href={link.href}
-                                    className="text-sm font-hero font-medium text-gray-300 hover:text-red-400 transition-colors uppercase tracking-wider"
-                                >
-                                    {link.name}
-                                </a>
-                            </motion.li>
-                        ))}
-                    </ul>
-                    <div className="flex gap-4 border-l border-white/10 pl-8">
-                        <a
-                            href="https://github.com/naol-zewdie"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-400 hover:text-red-400"
-                            aria-label="GitHub Profile"
-                        >
-                            <Github size={18} />
-                        </a>
-                        <a
-                            href="https://www.linkedin.com/in/naol-zewdie"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-400 hover:text-red-400"
-                            aria-label="LinkedIn Profile"
-                        >
-                            <Linkedin size={18} />
-                        </a>
-                    </div>
-                </div>
-
-                {/* Mobile Toggle */}
-                <button
-                    className="md:hidden p-2 text-gray-400 hover:text-red-400"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-                </button>
-            </div>
-
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
-                    >
-                        <ul className="flex flex-col p-6 gap-4">
-                            {navLinks.map((link) => (
-                                <li key={link.name}>
-                                    <a
-                                        href={link.href}
-                                        className="text-lg font-hero font-medium text-gray-300 hover:text-red-400 block py-2 tracking-wide"
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                        {link.name}
-                                    </a>
-                                </li>
-                            ))}
-                            <div className="flex gap-6 pt-4 border-t border-white/5">
-                                <a href="https://github.com/naol-zewdie" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-400"><Github /></a>
-                                <a href="https://www.linkedin.com/in/naol-zewdie" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-400"><Linkedin /></a>
-                            </div>
-                        </ul>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav>
+  // Highlight the section currently in the middle of the screen.
+  useEffect(() => {
+    const sections = links.map((l) => document.querySelector(l.href)).filter(Boolean);
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(`#${e.target.id}`);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
     );
+    sections.forEach((s) => io.observe(s));
+    const onTop = () => window.scrollY < 200 && setActive('');
+    window.addEventListener('scroll', onTop, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener('scroll', onTop);
+    };
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const pill =
+    'bg-white/85 backdrop-blur-xl ring-1 ring-black/[0.06] transition-shadow duration-300 ' +
+    (scrolled ? 'shadow-[0_6px_24px_-12px_rgba(0,0,0,0.25)]' : 'shadow-none');
+
+  return (
+    <header className="fixed inset-x-0 top-3 z-50 sm:top-4">
+      <div className="shell flex items-start justify-between gap-3">
+        <nav aria-label="Main" className={`rounded-[22px] ${pill}`}>
+          <div className="flex h-12 items-center gap-1 pl-3 pr-1.5">
+            <a href="#top" className="mr-2 grid h-9 w-9 place-items-center rounded-full" aria-label="Naol Zewdie, back to top">
+              <PixelQuad size={22} />
+            </a>
+            <ul className="hidden items-center sm:flex">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    aria-current={active === l.href ? 'true' : undefined}
+                    className={
+                      'rounded-full px-3 py-2 text-[14px] transition-colors hover:bg-black/[0.04] hover:text-ink ' +
+                      (active === l.href ? 'bg-black/[0.06] text-ink' : 'text-ink-2')
+                    }
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              className="grid h-9 w-9 place-items-center rounded-full text-ink-2 hover:bg-black/[0.04] sm:hidden"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              onClick={() => setOpen((v) => !v)}
+            >
+              {open ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
+          {open && (
+            <ul id="mobile-menu" className="border-t border-line px-2 pb-2 pt-1 sm:hidden">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-xl px-3 py-2.5 text-[15px] text-ink-2 hover:bg-black/[0.04]"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </nav>
+
+        <div className="flex items-center gap-1.5">
+          <a href="#contact" className="btn btn-dark hidden h-12 sm:inline-flex">
+            Get in touch
+          </a>
+          <a href={`mailto:${profile.email}`} className="btn-round h-12 w-12" aria-label={`Email ${profile.email}`}>
+            <ArrowUpRight size={18} />
+          </a>
+        </div>
+      </div>
+    </header>
+  );
 }

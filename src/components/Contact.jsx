@@ -1,208 +1,115 @@
-import { motion } from 'framer-motion';
-import { Mail, MapPin, Send, Github, Linkedin, Twitter, Phone } from 'lucide-react';
 import { useState } from 'react';
+import { Check, Copy, Github, Linkedin, Mail, Phone } from 'lucide-react';
+import Reveal from './Reveal';
+import { profile } from '../data/profile';
+
+const input =
+  'w-full rounded-xl bg-canvas px-4 text-[15px] text-ink ring-1 ring-line outline-none transition-shadow placeholder:text-muted/70 focus:ring-2 focus:ring-sky-500';
 
 export default function Contact() {
-    const [formState, setFormState] = useState({ name: '', email: '', message: '' });
-    const [isSent, setIsSent] = useState(false);
-    const [isSending, setIsSending] = useState(false);
-    const [status, setStatus] = useState(null); // 'success' | 'error' | null
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [copied, setCopied] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsSending(true);
-        setStatus(null);
+  const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
-        try {
-            const formData = new URLSearchParams();
-            formData.append('name', formState.name);
-            formData.append('email', formState.email);
-            formData.append('message', formState.message);
-            formData.append('access_key', 'f8483346-848e-4f26-87b1-0b6dc49abf1a');
-            formData.append('_subject', 'Portfolio Contact');
-            formData.append('_captcha', 'false');
+  const submit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      const body = new URLSearchParams({ ...form, _subject: 'Portfolio contact', _captcha: 'false' });
+      const res = await fetch(`https://formsubmit.co/ajax/${profile.email}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+        body,
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setStatus('sent');
+      setForm({ name: '', email: '', message: '' });
+    } catch {
+      setStatus('error');
+    }
+  };
 
-            const response = await fetch("https://formsubmit.co/ajax/naol1000zedu@gmail.com", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "Accept": "application/json"
-                },
-                body: formData
-            });
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard unavailable; the mailto link still works */
+    }
+  };
 
-            if (response.ok) {
-                setIsSent(true);
-                setFormState({ name: '', email: '', message: '' });
-                setTimeout(() => setIsSent(false), 8000);
-            } else {
-                setStatus('error');
-            }
-        } catch (error) {
-            console.error("Submission error:", error);
-            setStatus('error');
-        } finally {
-            setIsSending(false);
-        }
-    };
-    const socials = [
-        { Icon: Github, link: "https://github.com/naol-zewdie" },
-        { Icon: Linkedin, link: "https://www.linkedin.com/in/naol-zewdie" },
-    ];
+  return (
+    <section id="contact" className="shell scroll-mt-20 py-10 sm:py-16">
+      <Reveal className="grid gap-10 rounded-[28px] bg-paper p-6 ring-1 ring-line sm:p-10 lg:grid-cols-12 lg:gap-12 lg:p-14">
+        <div className="lg:col-span-5">
+          <h2 className="display text-[clamp(56px,8vw,104px)]">Say hello</h2>
+          <p className="mt-6 max-w-[26rem] text-[16px] leading-relaxed text-ink-2">
+            Building something with drones, robots or a product that has to just work? Tell me what it is and
+            where it's hard.
+          </p>
 
-    return (
-        <section id="contact" className="section-padding bg-gray-950/50">
-            <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <h2 className="text-4xl md:text-5xl font-title font-bold mb-6 tracking-wide">
-                            Let's <span className="text-gradient">Connect</span>
-                        </h2>
-                        <p className="text-gray-300 text-lg mb-10 leading-relaxed font-light">
-                            Have a project in mind, need backend architecture consultation, or looking for a developer to ship reliable APIs?
-                            Feel free to reach out directly. My inbox is always open.
-                        </p>
-
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-6 p-4 glass-card border-none hover:bg-white/5 transition-colors">
-                                <div className="w-12 h-12 bg-red-950/60 border border-red-500/30 rounded-full flex items-center justify-center text-red-400 shadow-md shadow-red-950/50">
-                                    <Mail size={22} />
-                                </div>
-                                <div>
-                                    <h4 className="text-gray-400 text-xs uppercase tracking-widest font-bold">Email</h4>
-                                    <a href="mailto:naol1000zedu@gmail.com" className="text-white font-medium hover:text-red-400 transition-colors">
-                                        naol1000zedu@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-6 p-4 glass-card border-none hover:bg-white/5 transition-colors">
-                                <div className="w-12 h-12 bg-red-950/60 border border-red-500/30 rounded-full flex items-center justify-center text-red-400 shadow-md shadow-red-950/50">
-                                    <MapPin size={22} />
-                                </div>
-                                <div>
-                                    <h4 className="text-gray-400 text-xs uppercase tracking-widest font-bold">Location</h4>
-                                    <p className="text-white font-medium">Addis Ababa, Ethiopia</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-6 p-4 glass-card border-none hover:bg-white/5 transition-colors">
-                                <div className="w-12 h-12 bg-red-950/60 border border-red-500/30 rounded-full flex items-center justify-center text-red-400 shadow-md shadow-red-950/50">
-                                    <Phone size={22} />
-                                </div>
-                                <div>
-                                    <h4 className="text-gray-400 text-xs uppercase tracking-widest font-bold">Phone</h4>
-                                    <a href="tel:+251903053038" className="text-white font-medium hover:text-red-400 transition-colors">
-                                        +251 903 053 038
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="mt-12">
-                            <h4 className="text-white font-title font-bold mb-6 tracking-wide">Profiles & Code</h4>
-
-                            <div className="flex gap-4">
-                                {socials.map(({ Icon, link }, i) => (
-                                    <a
-                                        key={i}
-                                        href={link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="w-12 h-12 glass-card border-white/10 flex items-center justify-center text-gray-400 hover:text-red-400 hover:border-red-500/40 hover:bg-white/5 transition-all outline-none"
-                                    >
-                                        <Icon size={20} />
-                                    </a>
-                                ))}
-                            </div>
-
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="glass-card p-8 md:p-10 border border-white/10"
-                    >
-                        <form
-                            onSubmit={handleSubmit}
-                            className="space-y-6">
-
-                            <input type="hidden" name="_captcha" value="false" />
-                            <input type="hidden" name="_subject" value="New message from Portfolio" />
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Name</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        required
-                                        value={formState.name}
-                                        onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                                        className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-white focus:border-red-500/70 outline-none transition-all placeholder:text-gray-600"
-                                        placeholder="John Doe"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        required
-                                        value={formState.email}
-                                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                                        className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-white focus:border-red-500/70 outline-none transition-all placeholder:text-gray-600"
-                                        placeholder="john@example.com"
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 ml-1">Message</label>
-                                <textarea
-                                    name="message"
-                                    required
-                                    rows="5"
-                                    value={formState.message}
-                                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                                    className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-white focus:border-red-500/70 outline-none transition-all resize-none placeholder:text-gray-600"
-                                    placeholder="Tell me about your project or architecture needs..."
-                                ></textarea>
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={isSending || isSent}
-                                className={`w-full py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all ${isSent
-                                    ? 'bg-red-700 text-white shadow-[0_0_20px_rgba(220,38,38,0.6)]'
-                                    : 'bg-gradient-to-r from-red-700 via-red-600 to-red-800 hover:from-red-600 hover:to-red-700 text-white shadow-lg shadow-red-700/40 border border-red-500/40'
-                                    }`}
-                            >
-                                {isSent ? 'Message Sent!' : isSending ? 'Sending...' : 'Send Message'}
-                                {!isSending && !isSent && <Send size={18} />}
-                            </button>
-
-                            {isSent && (
-                                <div className="mt-6 p-4 rounded-xl bg-red-950/50 border border-red-500/40">
-                                    <p className="text-red-300 font-bold mb-1">Message Sent Successfully!</p>
-                                    <p className="text-gray-300 text-sm">Thank you for reaching out. I will get back to you as soon as possible.</p>
-                                </div>
-                            )}
-
-                            {status === 'error' && (
-                                <p className="text-red-400 text-center text-sm mt-4">
-                                    Something went wrong. Please click the email above to reach me directly.
-                                </p>
-                            )}
-                        </form>
-                    </motion.div>
-                </div>
+          <div className="mt-8 space-y-2">
+            <div className="flex items-center gap-2">
+              <a href={`mailto:${profile.email}`} className="inline-flex items-center gap-2.5 text-[16px] font-medium hover:underline hover:underline-offset-4">
+                <Mail size={17} className="text-muted" /> {profile.email}
+              </a>
+              <button
+                type="button"
+                onClick={copy}
+                className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-chip hover:text-ink"
+                aria-label="Copy email address"
+              >
+                {copied ? <Check size={15} /> : <Copy size={15} />}
+              </button>
             </div>
-        </section >
-    );
+            <a href={profile.phoneHref} className="inline-flex items-center gap-2.5 text-[15px] text-ink-2 hover:text-ink">
+              <Phone size={16} className="text-muted" /> {profile.phone}
+            </a>
+          </div>
+
+          <div className="mt-8 flex gap-2">
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="btn btn-light h-10 px-4">
+              <Github size={16} /> GitHub
+            </a>
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-light h-10 px-4">
+              <Linkedin size={16} /> LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <form onSubmit={submit} className="space-y-3 lg:col-span-7">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="block">
+              <span className="eyebrow mb-1.5 block">Name</span>
+              <input required value={form.name} onChange={update('name')} autoComplete="name" className={`${input} h-12`} />
+            </label>
+            <label className="block">
+              <span className="eyebrow mb-1.5 block">Email</span>
+              <input required type="email" value={form.email} onChange={update('email')} autoComplete="email" className={`${input} h-12`} />
+            </label>
+          </div>
+          <label className="block">
+            <span className="eyebrow mb-1.5 block">Message</span>
+            <textarea required rows={6} value={form.message} onChange={update('message')} className={`${input} resize-y py-3`} />
+          </label>
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            <button type="submit" disabled={status === 'sending'} className="btn btn-dark disabled:opacity-60">
+              {status === 'sending' ? 'Sending…' : 'Send message'}
+            </button>
+            <p role="status" className="text-[14px]">
+              {status === 'sent' && <span className="text-ink-2">Thanks, it's on its way. I'll reply by email.</span>}
+              {status === 'error' && (
+                <span className="text-[#c4320a]">
+                  That didn't send. Email me directly at {profile.email}.
+                </span>
+              )}
+            </p>
+          </div>
+        </form>
+      </Reveal>
+    </section>
+  );
 }
