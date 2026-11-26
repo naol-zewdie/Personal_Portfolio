@@ -4,24 +4,17 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [react(), tailwindcss()],
   build: {
-    target: 'esnext',
-    minify: 'esbuild',
-    cssMinify: true,
+    target: 'es2020',
+    // The lazily loaded 3D robot chunk (three.js) is ~1 MB; it never blocks first paint.
+    chunkSizeWarningLimit: 1100,
     rollupOptions: {
       output: {
         manualChunks: {
-          'three': ['three'],
-          'r3f-drei': ['@react-three/fiber', '@react-three/drei', 'maath'],
-          'motion-vendor': ['framer-motion'],
-          'icons-vendor': ['lucide-react'],
+          motion: ['framer-motion'],
         },
       },
     },
-    chunkSizeWarningLimit: 800,
   },
 })

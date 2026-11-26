@@ -1,74 +1,73 @@
-import { motion } from 'framer-motion';
-import { User, Code2, Briefcase, Award } from 'lucide-react';
-import me from "../assets/me.webp";
-const achievements = [
-    { icon: Code2, title: 'Reliable APIs', desc: 'Engineered for resilience, concurrency, and zero downtime.' },
-    { icon: Briefcase, title: 'Full Stack & Backend', desc: 'Production-ready TypeScript, NestJS, and PostgreSQL.' },
-    { icon: Award, title: 'Performance First', desc: 'Stress-tested architectures and disciplined load testing.' },
-];
+import { Plus } from 'lucide-react';
+import Reveal from './Reveal';
+import portrait from '../assets/naol.webp';
+import { faq, profile, stack } from '../data/profile';
+
+function Chips({ label, items }) {
+  return (
+    <div>
+      <p className="eyebrow mb-2">{label}</p>
+      <div className="flex flex-wrap gap-1.5">
+        {items.map((s) => (
+          <span key={s} className="chip">
+            {s}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function About() {
-    return (
-        <section id="about" className="section-padding bg-gray-950/50">
-            <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        <h2 className="text-4xl md:text-5xl font-title font-bold mb-8 tracking-wide">
-                            Engineering <span className="text-gradient">Resilient Backends</span> <br />
-                            and Scalable Systems
-                        </h2>
-                       <div className="space-y-6 text-gray-300 text-lg leading-relaxed font-light">
-                            <p>
-                                I am a Full Stack and Backend Developer specializing in architecting and shipping reliable, scalable backend systems. My core focus is building high-performance APIs with <span className="text-white font-medium underline decoration-red-600 decoration-2 underline-offset-4">TypeScript</span>, <span className="text-white font-medium underline decoration-red-600 decoration-2 underline-offset-4">NestJS</span>, and <span className="text-white font-medium underline decoration-red-600 decoration-2 underline-offset-4">PostgreSQL</span> that withstand real-world production demands.
-                            </p>
-                            <p>
-                                Based in Addis Ababa, I collaborate with startups to turn ambitious product visions into bulletproof systems. Whether it is designing robust database schemas, implementing strict validation pipelines, or running rigorous load-tests before launch, I ensure every endpoint delivers speed, integrity, and peace of mind.
-                            </p>
-                        </div>
+  return (
+    <section id="about" className="shell scroll-mt-20 py-20 sm:py-28">
+      <div className="grid gap-12 md:grid-cols-12 md:gap-10">
+        <Reveal className="md:col-span-5">
+          <div className="overflow-hidden rounded-[22px] bg-chip">
+            <img src={portrait} alt="Naol Zewdie" loading="lazy" className="aspect-[4/5] w-full object-cover object-top" />
+          </div>
+          <div className="mt-4 flex items-baseline justify-between">
+            <p className="text-[15px] font-medium">{profile.name}</p>
+            <p className="font-mono text-[12px] text-muted">{profile.location}</p>
+          </div>
+        </Reveal>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12">
-                            {achievements.map((item, index) => (
-                                <div key={index} className="glass-card p-6 border border-white/5 hover:border-red-500/40 transition-colors">
-                                    <item.icon className="text-red-500 mb-4" size={32} />
-                                    <h3 className="text-white font-bold mb-2 font-title tracking-wide">{item.title}</h3>
-                                    <p className="text-gray-400 text-sm">{item.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </motion.div>
+        <Reveal delay={0.06} className="md:col-span-7">
+          <h2 className="text-[40px] font-medium leading-none tracking-[-0.035em] sm:text-[56px]">Small talk</h2>
+          <p className="mt-4 max-w-[30rem] text-[16px] text-ink-2">The short answers. For anything else, just ask.</p>
 
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="relative"
-                    >
-                        <div className="aspect-[4/5] sm:aspect-square rounded-2xl overflow-hidden relative z-10 group border border-white/15 shadow-2xl shadow-red-950/40 bg-zinc-950">
-                            <img
-                                src={me}
-                                alt="Naol Zewdie"
-                                loading="lazy"
-                                decoding="async"
-                                className="w-full h-full object-cover object-top filter grayscale contrast-105 group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-                            <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 transition-all duration-300">
-                                <p className="text-white text-sm font-title font-bold tracking-wide">Naol Zewdie</p>
-                                <p className="text-red-400 text-xs font-hero">Full Stack & Backend Developer</p>
-                            </div>
-                        </div>
-                        {/* Decors */}
-                        <div className="absolute -top-10 -right-10 w-40 h-40 bg-red-600/15 rounded-full blur-3xl animate-pulse"></div>
-                        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-rose-950/20 rounded-full blur-3xl animate-pulse delay-700"></div>
-                    </motion.div>
+          <div className="mt-8 space-y-2">
+            {faq.map((item, i) => (
+              <details key={item.q} className="group rounded-2xl bg-paper ring-1 ring-line open:ring-[#d9d9d4]" open={i === 0}>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[16px] font-medium [&::-webkit-details-marker]:hidden">
+                  {item.q}
+                  <Plus size={18} className="flex-none text-muted transition-transform duration-300 group-open:rotate-45" aria-hidden="true" />
+                </summary>
+                <div className="px-5 pb-5 text-[15px] leading-relaxed text-ink-2">
+                  {item.chips ? (
+                    <div className="space-y-4">
+                      <Chips label="Every day" items={stack.today} />
+                      <Chips label="Learning now" items={stack.learning} />
+                    </div>
+                  ) : (
+                    <p className="max-w-[56ch]">
+                      {item.a}
+                      {item.email && (
+                        <>
+                          {' '}
+                          <a href={`mailto:${profile.email}`} className="text-ink underline decoration-line underline-offset-4 hover:decoration-ink">
+                            {profile.email}
+                          </a>
+                        </>
+                      )}
+                    </p>
+                  )}
                 </div>
-            </div>
-        </section>
-    );
+              </details>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
 }
